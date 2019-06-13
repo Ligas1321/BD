@@ -1,0 +1,149 @@
+DROP TABLE Peoples_Talkes;
+DROP TABLE MASSAGES;
+
+DROP TABLE Walls_MASSAGES;
+DROP TABLE Talkes;
+
+DROP TABLE People;
+
+
+CREATE table People (
+    ID          NUMBER(6) primary key, 
+    NAME        VARCHAR2(255) NOT NULL,
+    SURNAME     VARCHAR2(255),
+    age_check   NUMBER(3),
+    Country     VARCHAR2(255) NOT NULL,
+    Town        VARCHAR2(255) NOT NULL,
+    University  VARCHAR2(255),
+    Faculty     VARCHAR2(255)
+)
+/
+
+
+
+CREATE table MASSAGES (
+    ID          NUMBER(6) primary key, 
+    ID_From       NUMBER(6) NOT NULL,
+    ID_TO      NUMBER(6) NOT NULL,
+    Massage     VARCHAR2(255) NOT NULL,
+    Data_send  Date 
+)
+/
+
+CREATE table Walls_MASSAGES (
+    ID          NUMBER(6) primary key, 
+    ID_From     NUMBER(6) NOT NULL,
+    ID_TO      NUMBER(6) NOT NULL,
+    Massage     VARCHAR2(255) NOT NULL,
+    Data_send DATE 
+)
+/
+CREATE table Talkes (
+     ID          NUMBER(6) primary key, 
+    author       NUMBER(6) NOT NULL,
+    Date_create      DATE,
+    Title     VARCHAR2(255) NOT NULL
+)
+/
+CREATE table Peoples_Talkes (
+    N                NUMBER(6) primary key,
+    ID_talk          NUMBER(6) NOT NULL,
+    ID_People        NUMBER(6) NOT NULL,
+    Date_add         DATE 
+)
+/
+
+ALTER TABLE Peoples_Talkes ADD CONSTRAINT Peoples_Talkes_FK_1
+FOREIGN KEY (ID_talk)
+REFERENCES Talkes (ID)
+ON DELETE CASCADE;
+
+ALTER TABLE Peoples_Talkes ADD CONSTRAINT Peoples_Talkes_FK_2
+FOREIGN KEY (ID_People)
+REFERENCES People (ID)
+ON DELETE CASCADE;
+
+ALTER TABLE Talkes ADD CONSTRAINT Talks_FK_1
+FOREIGN KEY (author)
+REFERENCES People (ID)
+ON DELETE CASCADE;
+
+ALTER TABLE MASSAGES ADD CONSTRAINT MASSAGES_FK_1
+FOREIGN KEY (ID_From)
+REFERENCES People (ID)
+ON DELETE CASCADE;
+
+ALTER TABLE MASSAGES ADD CONSTRAINT MASSAGES_FK_2
+FOREIGN KEY (ID_To)
+REFERENCES Talkes (ID)
+ON DELETE CASCADE;
+
+ALTER TABLE Walls_MASSAGES ADD CONSTRAINT Walls_MASSAGES_FK_1
+FOREIGN KEY (ID_From)
+REFERENCES People (ID)
+ON DELETE CASCADE;
+
+ALTER TABLE Walls_MASSAGES ADD CONSTRAINT Walls_MASSAGES_FK_2
+FOREIGN KEY (ID_To)
+REFERENCES People (ID)
+ON DELETE CASCADE;
+
+
+
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (0,'Иван','Иванов',22,'Россия','Москва','МГУ','Исторический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (1,'Михаил','Михайлов',42,'Россия','Москва','МГУ','Физический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (2,'Виктория','Николаева',41,'Россия','Москва','МГУ','Геологический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (3,'Нуль','Нулёвый',22,'Россия','Москва','МГУ','Физический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (4,'Евгения','Сидорова',22,'Россия','Москва','МГУ','Исторический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (5,'Сергей','Иванцов',30,'Россия','Москва','МГУ','Геологический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (6,'Николай','Борисов',11,'Россия','Москва','МГУ','Физический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (7,'Виктория','Воронцов',31,'Россия','Москва','МГУ','Физический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (8,'Марина','Кузнецов',11,'Россия','Москва','МГУ','Геологический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (9,'Джон','Уик',31,'Россия','Москва','МГУ','Физический факультет');
+INSERT INTO People (id,name, surname, age_check,Country,Town,University,Faculty) VALUES (10,'Виктор','Понедельник',31,'Россия','Москва','МГУ','Физический факультет');
+
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (0,1,'10-03-2018','Беседа 1');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (1,0,'01-03-2018','Беседа 13');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (2,8,'01-07-2018','Беседа 2');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (3,7,'05-11-2018','Беседа 3');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (4,1,'05-12-2018','Беседа 4');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (5,7,'07-02-2018','Беседа 5');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (6,4,'08-01-2018','Беседа 6');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (7,3,'09-01-2018','Беседа 7');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (8,1,'08-07-2018','Беседа 8');
+INSERT INTO Talkes (ID,author,Date_create,Title) VALUES (9,2,'02-04-2018','Беседа 9');
+
+
+
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (0,1,2,'Теннис','05-02-2019' );
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (1,2,3,'Лыжные','03-03-2019');
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (2,3,4,'Фехтование','12-12-2019');
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (3,4,5,'Футбол','09-03-2019');
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (4,5,6,'Баскетбол','07-03-2019');
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (5,6,7,'Биатлон','05-05-2019');
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (6,7,8,'Волейбол','01-07-2019');
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (7,8,9,'Музыка','05-03-2019');
+INSERT INTO Walls_MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (8,9,10,'Музыка','05-03-2019');
+
+
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (0,0,1,'Теннис','05-03-2019');
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (1,5,0,'Лыжные','08-02-2019');
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (2,7,2,'Фехтование','08-02-2019');
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (3,1,0,'Футбол','08-02-2019');
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (4,3,6,'Баскетбол','08-02-2019');
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (5,4,5,'Биатлон','06-02-20019');
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (6,6,4,'Волейбол','01-02-2019');
+INSERT INTO MASSAGES (ID,ID_From,ID_To,Massage,Data_send) VALUES (7,10,9,'Музыка','02-02-2019');
+
+
+
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (0,0,1,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (1,0,2,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (2,2,3,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (3,3,4,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (4,4,5,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (5,4,1,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (6,3,7,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (7,2,8,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (8,4,8,'15-03-2019');
+INSERT INTO Peoples_Talkes (N,ID_talk,ID_People,Date_add) VALUES (9,2,10,'15-03-2019');
